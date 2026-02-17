@@ -536,7 +536,7 @@
     <div class="contact-info">
       <div class="contact-item reveal">
         <div class="contact-item-icon">📧</div>
-        <div><h4>E-mail</h4><p><a href="mailto:info@rojatech.nl">info@rojatech.nl</a></p></div>
+        <div><h4>E-mail</h4><p><a href="/cdn-cgi/l/email-protection#2b42454d446b5944414a5f4e4843054547"><span class="__cf_email__" data-cfemail="f990979f96b98b9693988d9c9a91d79795">[email&#160;protected]</span></a></p></div>
       </div>
       <div class="contact-item reveal d1">
         <div class="contact-item-icon">🌐</div>
@@ -559,7 +559,7 @@
       <!-- Foutmelding (zichtbaar bij mislukt versturen) -->
       <div class="form-error-banner" id="formErrorBanner">
         ❌ Er is iets misgegaan. Probeer het opnieuw of mail ons direct:
-        <a href="mailto:info@rojatech.nl">info@rojatech.nl</a>
+        <a href="/cdn-cgi/l/email-protection#b6dfd8d0d9f6c4d9dcd7c2d3d5de98d8da"><span class="__cf_email__" data-cfemail="e28b8c848da2908d88839687818acc8c8e">[email&#160;protected]</span></a>
       </div>
 
       <!-- Het formulier -->
@@ -626,11 +626,11 @@
   <p class="footer-copy">© 2025 RoJa.tech — Digitale vrijheid voor iedereen</p>
   <ul class="footer-links">
     <li><a href="#">Privacy</a></li>
-    <li><a href="#">Algemene voorwaarden</a></li>
+    <li><a href="algemene-voorwaarden.html">Algemene voorwaarden</a></li>
   </ul>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   /* ── HAMBURGER ── */
   const hamburger = document.getElementById('hamburger');
   const navLinks  = document.getElementById('navLinks');
@@ -696,25 +696,11 @@
 
     try {
       // ▼▼▼  VERVANG 'XXXXXXXX' DOOR UW FORMSPREE FORM-ID  ▼▼▼
-      const res = await fetch('https://formspree.io/f/xwvnbyrj', {
+      const res = await fetch('https://formspree.io/f/XXXXXXXX', {
         method: 'POST',
         body: new FormData(form),
         headers: { 'Accept': 'application/json' }
       });
 
       if (res.ok) {
-        form.style.display  = 'none';
-        formErr.style.display = 'none';
-        formOK.classList.add('show');   // ← succesmelding tonen
-      } else {
-        throw new Error(res.status);
-      }
-    } catch {
-      formErr.classList.add('show');
-      formBtn.textContent = 'Verstuur bericht ✉️';
-      formBtn.disabled = false;
-    }
-  });
-</script>
-</body>
-</html>
+        form.st
