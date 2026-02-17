@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algemene Voorwaarden – RoJa.tech</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-deep:   #0a1628;
+      --blue-mid:    #112244;
+      --eu-gold:     #f0c040;
+      --eu-gold-dim: #c8a030;
+      --white:       #f5f7fa;
+      --text-muted:  #8899bb;
+      --card-bg:     #0e1e38;
+      --border:      rgba(240,192,64,0.18);
+      --border-soft: rgba(255,255,255,0.07);
+      --radius:      12px;
+      --transition:  0.3s cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--blue-deep);
+      color: var(--white);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── STARFIELD ── */
+    #stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(30,79,163,0.3) 0%, transparent 70%);
+    }
+    #stars::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 75% 70%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 85%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 42% 88%, rgba(255,255,255,0.5) 0%, transparent 100%);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.2rem, 5vw, 4rem); height: 68px;
+      background: rgba(10,22,40,0.92);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
+      letter-spacing: -0.02em; color: var(--white); text-decoration: none;
+    }
+    .nav-logo span { color: var(--eu-gold); }
+    .nav-back {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.85rem; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; transition: color var(--transition);
+    }
+    .nav-back:hover { color: var(--white); }
+    .nav-back::before { content: '←'; font-size: 1rem; }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      position: relative; z-index: 1;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 8rem clamp(1.2rem, 5vw, 2.5rem) 6rem;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-bottom: 3.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-label {
+      font-size: 0.73rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--eu-gold); margin-bottom: 1rem;
+    }
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.025em;
+      margin-bottom: 1.2rem;
+    }
+    .page-meta {
+      display: flex; flex-wrap: wrap; gap: 1.5rem;
+      font-size: 0.82rem; color: var(--text-muted); font-weight: 300;
+    }
+    .page-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* ── DISCLAIMER BANNER ── */
+    .disclaimer-banner {
+      background: rgba(240,192,64,0.08);
+      border: 1px solid rgba(240,192,64,0.25);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 3rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    .disclaimer-banner strong { color: var(--eu-gold); font-weight: 600; }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--card-bg);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius);
+      padding: 1.8rem 2rem;
+      margin-bottom: 3.5rem;
+    }
+    .toc h2 {
+      font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--eu-gold); margin-bottom: 1rem;
+    }
+    .toc ol {
+      list-style: none; display: flex; flex-direction: column; gap: 0.4rem;
+      counter-reset: toc-counter;
+    }
+    .toc ol li { counter-increment: toc-counter; display: flex; align-items: baseline; gap: 0.6rem; }
+    .toc ol li::before {
+      content: counter(toc-counter) ".";
+      font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700;
+      color: var(--eu-gold); min-width: 1.4rem; flex-shrink: 0;
+    }
+    .toc ol li a {
+      font-size: 0.88rem; color: var(--text-muted); text-decoration: none;
+      font-weight: 300; transition: color var(--transition);
+    }
+    .toc ol li a:hover { color: var(--white); }
+
+    /* ── ARTICLES ── */
+    .av-article {
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .av-article:last-of-type { border-bottom: none; }
+
+    .av-article h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem; font-weight: 700;
+      margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      scroll-margin-top: 90px;
+    }
+    .article-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 2rem; height: 2rem; border-radius: 6px;
+      background: rgba(240,192,64,0.12); border: 1px solid rgba(240,192,64,0.3);
+      font-size: 0.78rem; font-weight: 800; color: var(--eu-gold);
+      font-family: 'Syne', sans-serif; flex-shrink: 0;
+    }
+
+    .av-article p {
+      font-size: 0.95rem; color: var(--text-muted); font-weight: 300;
+      line-height: 1.85; margin-bottom: 1rem;
+    }
+    .av-article p:last-child { margin-bottom: 0; }
+
+    .av-article ol, .av-article ul {
+      padding-left: 1.4rem; margin-bottom: 1rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .av-article li {
+      font-size: 0.93rem; color: var(--text-muted); font-weight: 300; line-height: 1.75;
+    }
+    .av-article ol { list-style: decimal; }
+    .av-article ul { list-style: none; padding-left: 0; }
+    .av-article ul li { display: flex; align-items: flex-start; gap: 0.7rem; }
+    .av-article ul li::before { content: '▸'; color: var(--eu-gold); flex-shrink: 0; margin-top: 0.1em; }
+
+    strong { color: var(--white); font-weight: 600; }
+    em { color: var(--eu-gold); font-style: normal; }
+
+    /* ── SIGNATURE BLOCK ── */
+    .signature-block {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+    .signature-block h3 {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+      margin-bottom: 1.2rem; color: var(--white);
+    }
+    .sig-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      margin-bottom: 0.6rem;
+    }
+    .sig-label { font-size: 0.75rem; color: var(--eu-gold); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
+    .sig-value { font-size: 0.9rem; color: var(--text-muted); font-weight: 300; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.2rem clamp(1.2rem, 5vw, 4rem);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem; position: relative; z-index: 1;
+    }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; }
+    .footer-logo span { color: var(--eu-gold); }
+    .footer-copy { font-size: 0.78rem; color: var(--text-muted); font-weight: 300; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { font-size: 0.78rem; color: var(--text-muted); text-decoration: none; transition: color var(--transition); }
+    .footer-links a:hover { color: var(--white); }
+
+    @media (max-width: 600px) {
+      .sig-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" class="nav-logo">RoJa<span>.tech</span></a>
+  <a href="index.html" class="nav-back">Terug naar website</a>
+</nav>
+
+<!-- ── CONTENT ── -->
+<main>
+
+  <div class="page-header">
+    <p class="page-label">Juridisch</p>
+    <h1 class="page-title">Algemene Voorwaarden</h1>
+    <div class="page-meta">
+      <span>📋 RoJa.tech</span>
+      <span>📅 Versie 1.0 — januari 2025</span>
+      <span>🇳🇱 Van toepassing op alle dienstverlening</span>
+    </div>
+  </div>
+
+  <div class="disclaimer-banner">
+    <strong>⚠️ Let op:</strong> Dit is een eerste opzet van de algemene voorwaarden. Wij adviseren u deze te laten beoordelen door een juridisch adviseur voordat u ze definitief in gebruik neemt, zodat ze volledig aansluiten op uw specifieke bedrijfssituatie en de geldende wet- en regelgeving.
+  </div>
+
+  <!-- Inhoudsopgave -->
+  <div class="toc">
+    <h2>Inhoudsopgave</h2>
+    <ol>
+      <li><a href="#art1">Definities</a></li>
+      <li><a href="#art2">Toepasselijkheid</a></li>
+      <li><a href="#art3">Aanbod en totstandkoming overeenkomst</a></li>
+      <li><a href="#art4">Diensten</a></li>
+      <li><a href="#art5">Verplichtingen opdrachtgever</a></li>
+      <li><a href="#art6">Tarieven en betaling</a></li>
+      <li><a href="#art7">Uitvoering van de diensten</a></li>
+      <li><a href="#art8">Geheimhouding en privacy</a></li>
+      <li><a href="#art9">Intellectueel eigendom</a></li>
+      <li><a href="#art10">Aansprakelijkheid</a></li>
+      <li><a href="#art11">Overmacht</a></li>
+      <li><a href="#art12">Opzegging en ontbinding</a></li>
+      <li><a href="#art13">Klachten</a></li>
+      <li><a href="#art14">Toepasselijk recht en geschillen</a></li>
+      <li><a href="#art15">Wijziging voorwaarden</a></li>
+    </ol>
+  </div>
+
+  <!-- Artikel 1 -->
+  <div class="av-article" id="art1">
+    <h2><span class="article-num">1</span>Definities</h2>
+    <p>In deze algemene voorwaarden wordt verstaan onder:</p>
+    <ul>
+      <li><strong>RoJa.tech:</strong> de eenmanszaak/onderneming RoJa.tech, gevestigd in Nederland, ingeschreven bij de Kamer van Koophandel, die diensten aanbiedt op het gebied van digitale migratie naar Europese software- en cloudoplossingen.</li>
+      <li><strong>Opdrachtgever:</strong> de natuurlijke persoon of rechtspersoon die een overeenkomst aangaat met RoJa.tech voor het afnemen van diensten.</li>
+      <li><strong>Consument:</strong> de opdrachtgever die handelt als natuurlijk persoon en niet in de uitoefening van een beroep of bedrijf.</li>
+      <li><strong>Diensten:</strong> alle werkzaamheden die RoJa.tech ten behoeve van de opdrachtgever verricht, waaronder maar niet beperkt tot advies, begeleiding en ondersteuning bij de overstap van Amerikaanse naar Europese software en cloudoplossingen.</li>
+      <li><strong>Overeenkomst:</strong> de overeenkomst van opdracht tussen RoJa.tech en de opdrachtgever.</li>
+      <li><strong>Schriftelijk:</strong> per brief, e-mail of ander elektronisch communicatiemiddel.</li>
+    </ul>
+  </div>
+
+  <!-- Artikel 2 -->
+  <div class="av-article" id="art2">
+    <h2><span class="article-num">2</span>Toepasselijkheid</h2>
+    <ol>
+      <li>Deze algemene voorwaarden zijn van toepassing op alle aanbiedingen, offertes en overeenkomsten van RoJa.tech, tenzij schriftelijk anders overeengekomen.</li>
+      <li>Afwijkingen van deze voorwaarden zijn alleen geldig indien deze uitdrukkelijk schriftelijk zijn overeengekomen.</li>
+      <li>De toepasselijkheid van algemene voorwaarden van de opdrachtgever wordt uitdrukkelijk van de hand gewezen.</li>
+      <li>Indien een bepaling uit deze voorwaarden nietig of vernietigbaar blijkt, laat dit de geldigheid van de overige bepalingen onverlet.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 3 -->
+  <div class="av-article" id="art3">
+    <h2><span class="article-num">3</span>Aanbod en totstandkoming overeenkomst</h2>
+    <ol>
+      <li>Alle aanbiedingen van RoJa.tech zijn vrijblijvend, tenzij in de aanbieding een termijn voor aanvaarding is opgenomen.</li>
+      <li>Een overeenkomst komt tot stand op het moment dat de opdrachtgever een aanbod van RoJa.tech schriftelijk aanvaardt of wanneer RoJa.tech een opdracht schriftelijk bevestigt.</li>
+      <li>Mondelinge afspraken binden RoJa.tech pas nadat deze schriftelijk zijn bevestigd.</li>
+      <li>Voor consumenten geldt een bedenktijd van 14 kalenderdagen na totstandkoming van de overeenkomst, conform het Burgerlijk Wetboek. Indien de opdrachtgever uitdrukkelijk verzoekt de dienstverlening binnen de bedenktijd te starten, vervalt het herroepingsrecht voor het reeds uitgevoerde deel.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 4 -->
+  <div class="av-article" id="art4">
+    <h2><span class="article-num">4</span>Diensten</h2>
+    <ol>
+      <li>RoJa.tech biedt diensten aan op het gebied van digitale onafhankelijkheid, waaronder:
+        <ul style="margin-top:0.7rem;">
+          <li>Advies over Europese alternatieven voor software en cloudoplossingen;</li>
+          <li>Begeleiding bij migratie van e-mail, cloudopslag en kantoorapplicaties;</li>
+          <li>Ondersteuning bij overstap van browser, zoekmachine en smartphone-apps;</li>
+          <li>Privacy Scan en persoonlijk migratieplan;</li>
+          <li>Nazorg en ondersteuning na de overstap.</li>
+        </ul>
+      </li>
+      <li>De exacte omvang van de te leveren diensten wordt vastgelegd in de opdrachtbevestiging of offerte.</li>
+      <li>RoJa.tech is gerechtigd bij de uitvoering van de diensten gebruik te maken van derden.</li>
+      <li>RoJa.tech verleent een inspanningsverplichting, geen resultaatsverplichting, tenzij schriftelijk anders overeengekomen.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 5 -->
+  <div class="av-article" id="art5">
+    <h2><span class="article-num">5</span>Verplichtingen opdrachtgever</h2>
+    <ol>
+      <li>De opdrachtgever is verplicht alle informatie en medewerking te verlenen die RoJa.tech redelijkerwijs noodzakelijk acht voor een goede uitvoering van de diensten.</li>
+      <li>De opdrachtgever staat in voor de juistheid, volledigheid en betrouwbaarheid van de verstrekte informatie.</li>
+      <li>De opdrachtgever is zelf verantwoordelijk voor het maken van back-ups van zijn gegevens vóór aanvang van de migratiewerkzaamheden.</li>
+      <li>RoJa.tech is niet aansprakelijk voor schade ontstaan door onjuiste, onvolledige of te laat verstrekte informatie door de opdrachtgever.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 6 -->
+  <div class="av-article" id="art6">
+    <h2><span class="article-num">6</span>Tarieven en betaling</h2>
+    <ol>
+      <li>Alle tarieven zijn in euro's en inclusief btw, tenzij anders vermeld.</li>
+      <li>Betaling dient te geschieden binnen 14 dagen na factuurdatum, tenzij schriftelijk anders overeengekomen.</li>
+      <li>Bij niet-tijdige betaling is de opdrachtgever van rechtswege in verzuim. RoJa.tech is dan gerechtigd de wettelijke rente in rekening te brengen.</li>
+      <li>RoJa.tech behoudt zich het recht voor tarieven jaarlijks aan te passen. Wijzigingen worden minimaal 30 dagen van tevoren schriftelijk meegedeeld.</li>
+      <li>Voor consumenten geldt dat prijswijzigingen binnen 3 maanden na totstandkoming van de overeenkomst recht geven op ontbinding.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 7 -->
+  <div class="av-article" id="art7">
+    <h2><span class="article-num">7</span>Uitvoering van de diensten</h2>
+    <ol>
+      <li>RoJa.tech voert de diensten uit naar beste inzicht en vermogen, in overeenstemming met de eisen van goed vakmanschap.</li>
+      <li>Eventuele levertijden en planningen zijn indicatief en geven de opdrachtgever bij overschrijding geen recht op ontbinding of schadevergoeding, tenzij schriftelijk anders overeengekomen.</li>
+      <li>RoJa.tech adviseert uitsluitend over Europese en privacy-vriendelijke alternatieven, onafhankelijk van enige commerciële relatie met aanbieders van die diensten.</li>
+      <li>De opdrachtgever beslist zelf over de uiteindelijke keuze en aanschaf van software of diensten; RoJa.tech is hiervoor niet aansprakelijk.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 8 -->
+  <div class="av-article" id="art8">
+    <h2><span class="article-num">8</span>Geheimhouding en privacy</h2>
+    <ol>
+      <li>RoJa.tech behandelt alle informatie van de opdrachtgever vertrouwelijk en deelt deze niet met derden, tenzij dit noodzakelijk is voor de uitvoering van de diensten of wettelijk verplicht.</li>
+      <li>RoJa.tech verwerkt persoonsgegevens in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG) en de geldende Nederlandse privacywetgeving.</li>
+      <li>De opdrachtgever geeft toestemming voor de verwerking van zijn persoonsgegevens ten behoeve van de uitvoering van de overeenkomst en voor communicatiedoeleinden. Voor verdere details verwijzen wij naar onze privacyverklaring op de website.</li>
+      <li>Beide partijen zijn verplicht tot geheimhouding van alle vertrouwelijke informatie die zij in het kader van de overeenkomst hebben verkregen. Deze verplichting geldt ook na beëindiging van de overeenkomst.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 9 -->
+  <div class="av-article" id="art9">
+    <h2><span class="article-num">9</span>Intellectueel eigendom</h2>
+    <ol>
+      <li>Alle door RoJa.tech verstrekte adviezen, rapporten, migratieplannen en overige documentatie zijn auteursrechtelijk beschermd en eigendom van RoJa.tech, tenzij schriftelijk anders overeengekomen.</li>
+      <li>De opdrachtgever krijgt een niet-exclusief gebruiksrecht op de aan hem verstrekte documenten, uitsluitend voor eigen gebruik.</li>
+      <li>Het is de opdrachtgever niet toegestaan verstrekte materialen zonder toestemming van RoJa.tech te verveelvoudigen, openbaar te maken of aan derden ter beschikking te stellen.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 10 -->
+  <div class="av-article" id="art10">
+    <h2><span class="article-num">10</span>Aansprakelijkheid</h2>
+    <ol>
+      <li>RoJa.tech is niet aansprakelijk voor schade die voortvloeit uit:
+        <ul style="margin-top:0.7rem;">
+          <li>Onjuiste, onvolledige of te laat verstrekte informatie door de opdrachtgever;</li>
+          <li>Beslissingen van de opdrachtgever op basis van de verleende adviezen;</li>
+          <li>Storingen of tekortkomingen van door derden aangeboden software of diensten;</li>
+          <li>Gegevensverlies dat had kunnen worden voorkomen door het maken van back-ups.</li>
+        </ul>
+      </li>
+      <li>Indien RoJa.tech aansprakelijk is voor directe schade, is deze aansprakelijkheid beperkt tot maximaal het bedrag dat voor de betreffende opdracht in rekening is gebracht, met een maximum van € 500,–.</li>
+      <li>Aansprakelijkheid voor indirecte schade, gevolgschade, gederfde winst of gemiste besparingen is uitdrukkelijk uitgesloten.</li>
+      <li>Voor consumenten gelden de dwingendrechtelijke bepalingen van Boek 6 van het Burgerlijk Wetboek onverkort.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 11 -->
+  <div class="av-article" id="art11">
+    <h2><span class="article-num">11</span>Overmacht</h2>
+    <ol>
+      <li>RoJa.tech is niet gehouden tot het nakomen van enige verplichting indien zij daartoe verhinderd is door een omstandigheid die niet aan haar is toe te rekenen.</li>
+      <li>Onder overmacht wordt verstaan: ziekte, bedrijfsstoring, stroomuitval, internetstoring, overheidsmaatregel, pandemie, of andere buiten de macht van RoJa.tech liggende omstandigheden.</li>
+      <li>Indien een overmachtsituatie langer dan 30 dagen duurt, zijn beide partijen gerechtigd de overeenkomst te ontbinden zonder recht op schadevergoeding.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 12 -->
+  <div class="av-article" id="art12">
+    <h2><span class="article-num">12</span>Opzegging en ontbinding</h2>
+    <ol>
+      <li>Lopende opdrachten kunnen door beide partijen schriftelijk worden opgezegd met inachtneming van een opzegtermijn van 14 kalenderdagen.</li>
+      <li>RoJa.tech is gerechtigd de overeenkomst met onmiddellijke ingang te ontbinden indien de opdrachtgever zijn verplichtingen niet nakomt en na schriftelijke ingebrekestelling en een redelijke termijn alsnog in gebreke blijft.</li>
+      <li>Bij voortijdige opzegging door de opdrachtgever is het reeds uitgevoerde werk verschuldigd op basis van de gemaakte uren of het overeengekomen tarief.</li>
+      <li>Consumenten hebben het recht de overeenkomst te ontbinden conform de wettelijke herroepingsrechten beschreven in artikel 3.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 13 -->
+  <div class="av-article" id="art13">
+    <h2><span class="article-num">13</span>Klachten</h2>
+    <ol>
+      <li>Klachten over de uitvoering van de diensten dienen schriftelijk en zo spoedig mogelijk, doch uiterlijk binnen 14 dagen na ontdekking, bij RoJa.tech te worden ingediend via <strong>info@rojatech.nl</strong>.</li>
+      <li>RoJa.tech streeft ernaar klachten binnen 5 werkdagen te beantwoorden en naar een passende oplossing te zoeken.</li>
+      <li>Het indienen van een klacht schort de betalingsverplichting van de opdrachtgever niet op.</li>
+      <li>Indien de klacht niet naar tevredenheid wordt opgelost, kan de consument een geschil voorleggen aan de bevoegde rechter of, indien beschikbaar, aan een erkend geschilleninstantie.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 14 -->
+  <div class="av-article" id="art14">
+    <h2><span class="article-num">14</span>Toepasselijk recht en geschillen</h2>
+    <ol>
+      <li>Op alle overeenkomsten tussen RoJa.tech en de opdrachtgever is Nederlands recht van toepassing.</li>
+      <li>Geschillen worden in eerste instantie geprobeerd op te lossen door middel van overleg. Leidt dit niet tot een oplossing, dan worden geschillen voorgelegd aan de bevoegde rechter in het arrondissement van de vestigingsplaats van RoJa.tech.</li>
+      <li>Voor consumenten geldt dat zij tevens het recht hebben een geschil voor te leggen aan de rechter van hun eigen woonplaats.</li>
+    </ol>
+  </div>
+
+  <!-- Artikel 15 -->
+  <div class="av-article" id="art15">
+    <h2><span class="article-num">15</span>Wijziging voorwaarden</h2>
+    <ol>
+      <li>RoJa.tech behoudt zich het recht voor deze algemene voorwaarden te wijzigen.</li>
+      <li>Wijzigingen worden minimaal 30 dagen voor inwerkingtreding schriftelijk of via de website kenbaar gemaakt.</li>
+      <li>Voortgezet gebruik van de diensten na inwerkingtreding van de gewijzigde voorwaarden geldt als aanvaarding daarvan.</li>
+      <li>Consumenten die niet akkoord gaan met de gewijzigde voorwaarden hebben het recht de overeenkomst op te zeggen vóór de datum van inwerkingtreding.</li>
+    </ol>
+  </div>
+
+  <!-- Bedrijfsgegevens -->
+  <div class="signature-block">
+    <h3>Bedrijfsgegevens RoJa.tech</h3>
+    <div class="sig-row">
+      <div>
+        <div class="sig-label">Handelsnaam</div>
+        <div class="sig-value">RoJa.tech</div>
+      </div>
+      <div>
+        <div class="sig-label">Vestigingsland</div>
+        <div class="sig-value">Nederland</div>
+      </div>
+    </div>
+    <div class="sig-row">
+      <div>
+        <div class="sig-label">E-mail</div>
+        <div class="sig-value">info@rojatech.nl</div>
+      </div>
+      <div>
+        <div class="sig-label">Website</div>
+        <div class="sig-value">www.rojatech.nl</div>
+      </div>
+    </div>
+    <div class="sig-row">
+      <div>
+        <div class="sig-label">KvK-nummer</div>
+        <div class="sig-value"><em>in te vullen</em></div>
+      </div>
+      <div>
+        <div class="sig-label">Versie</div>
+        <div class="sig-value">1.0 — januari 2025</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">RoJa<span>.tech</span></div>
+  <p class="footer-copy">© 2025 RoJa.tech — Digitale vrijheid voor iedereen</p>
+  <ul class="footer-links">
+    <li><a href="algemene-voorwaarden.html" aria-current="page">Algemene voorwaarden</a></li>
+    <li><a href="index.html">Terug naar home</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
