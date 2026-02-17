@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoJa.tech – Europese Digitale Vrijheid</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-deep: #0a1628;
+      --blue-mid: #112244;
+      --blue-accent: #1e4fa3;
+      --eu-gold: #f0c040;
+      --eu-gold-dim: #c8a030;
+      --white: #f5f7fa;
+      --text-muted: #8899bb;
+      --card-bg: #0e1e38;
+      --border: rgba(240,192,64,0.18);
+      --radius: 12px;
+      --transition: 0.3s cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--blue-deep);
+      color: var(--white);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── STARFIELD ── */
+    #stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(30,79,163,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 20%, rgba(240,192,64,0.06) 0%, transparent 60%);
+    }
+    #stars::before, #stars::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 55% 70%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 80%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 85%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 60% 10%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 92%, rgba(255,255,255,0.5) 0%, transparent 100%);
+    }
+    #stars::after {
+      background-image:
+        radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 45% 65%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 35%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 45%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 30% 75%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 55%, rgba(255,255,255,0.4) 0%, transparent 100%);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 72px;
+      background: rgba(10,22,40,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-logo span { color: var(--eu-gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--eu-gold);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--eu-gold);
+      color: var(--blue-deep) !important;
+      padding: 0.5rem 1.3rem;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      color: var(--blue-deep);
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+      transition: background var(--transition), transform var(--transition) !important;
+    }
+    .nav-cta:hover { background: var(--eu-gold-dim) !important; transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem clamp(1.5rem, 5vw, 4rem) 5rem;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(240,192,64,0.12);
+      border: 1px solid rgba(240,192,64,0.3);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--eu-gold);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+    }
+    .hero-badge::before { content: '★'; }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--eu-gold);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--eu-gold);
+      color: var(--blue-deep);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 4px 20px rgba(240,192,64,0.25);
+    }
+    .btn-primary:hover {
+      background: var(--eu-gold-dim);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(240,192,64,0.35);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .btn-secondary:hover {
+      border-color: var(--eu-gold);
+      background: rgba(240,192,64,0.06);
+    }
+
+    /* EU Circle Visual */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .eu-ring {
+      position: relative;
+      width: clamp(220px, 28vw, 340px);
+      height: clamp(220px, 28vw, 340px);
+    }
+
+    .eu-ring svg {
+      width: 100%;
+      height: 100%;
+      animation: rotateSlow 40s linear infinite;
+    }
+
+    @keyframes rotateSlow { to { transform: rotate(360deg); } }
+
+    .eu-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .eu-flag-text {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+    }
+    .eu-center p {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--eu-gold);
+      margin-top: 0.5rem;
+    }
+
+    /* ── TRUST STRIP ── */
+    .trust-strip {
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      gap: clamp(2rem, 5vw, 5rem);
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .trust-item .icon {
+      font-size: 1.2rem;
+      filter: saturate(0.6);
+    }
+
+    /* ── SERVICES ── */
+    #diensten {
+      padding: 7rem clamp(1.5rem, 5vw, 4rem);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 4rem;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--eu-gold);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
+    }
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .services-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--eu-gold) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .service-card:hover {
+      border-color: rgba(240,192,64,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .service-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+      color: var(--white);
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .service-examples {
+      margin-top: 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      background: rgba(30,79,163,0.35);
+      border: 1px solid rgba(30,79,163,0.5);
+      color: #8ab4f8;
+    }
+
+    /* ── ABOUT ── */
+    #over {
+      padding: 7rem clamp(1.5rem, 5vw, 4rem);
+      background: linear-gradient(180deg, transparent 0%, rgba(17,34,68,0.6) 50%, transparent 100%);
+    }
+
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--eu-gold);
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .about-content .section-header {
+      text-align: left;
+      margin-bottom: 2rem;
+      max-width: none;
+    }
+
+    .about-text {
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+      font-size: 0.98rem;
+    }
+
+    .value-list {
+      list-style: none;
+      margin-top: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .value-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+    .value-list li::before {
+      content: '▸';
+      color: var(--eu-gold);
+      flex-shrink: 0;
+      margin-top: 0.05em;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 7rem clamp(1.5rem, 5vw, 4rem);
+    }
+
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .contact-item-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .contact-item h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--eu-gold);
+      margin-bottom: 0.2rem;
+    }
+    .contact-item p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+    .contact-item a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .contact-item a:hover { color: var(--white); }
+
+    /* FORM */
+    .contact-form {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+    }
+
+    .contact-form h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1.8rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      -webkit-appearance: none;
+    }
+    .form-group select option { background: var(--blue-mid); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--eu-gold);
+      box-shadow: 0 0 0 3px rgba(240,192,64,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(136,153,187,0.6);
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--eu-gold);
+      color: var(--blue-deep);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      margin-top: 0.5rem;
+    }
+    .form-submit:hover {
+      background: var(--eu-gold-dim);
+      transform: translateY(-1px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--white);
+    }
+    .footer-logo span { color: var(--eu-gold); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 72px; left: 0; right: 0; bottom: 0;
+        background: rgba(10,22,40,0.97);
+        padding: 3rem 2rem;
+        gap: 2rem;
+        z-index: 99;
+        align-items: center;
+        justify-content: center;
+      }
+      .nav-links.open a { font-size: 1.3rem; }
+      .hamburger { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { order: -1; }
+      .about-inner { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; text-align: center; }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Delay helpers */
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+    .d4 { transition-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#home" class="nav-logo">RoJa<span>.tech</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#diensten">Diensten</a></li>
+    <li><a href="#over">Over RoJaTech</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu openen">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="home">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge reveal">100% Europese Software</div>
+      <h1 class="hero-title reveal d1">
+        Digitale<br/>
+        <em>vrijheid</em> begint<br/>
+        in Europa
+      </h1>
+      <p class="hero-sub reveal d2">
+        Wij helpen consumenten afscheid te nemen van Amerikaanse technologie en over te stappen naar privacy-vriendelijke, Europese alternatieven. Eenvoudig, betrouwbaar en stap voor stap.
+      </p>
+      <div class="hero-actions reveal d3">
+        <a href="#diensten" class="btn-primary">Bekijk onze diensten</a>
+        <a href="#contact" class="btn-secondary">Gratis adviesgesprek</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal d2">
+      <div class="eu-ring">
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer dotted ring -->
+          <circle cx="100" cy="100" r="90" stroke="rgba(240,192,64,0.15)" stroke-width="1" stroke-dasharray="4 6"/>
+          <!-- Middle ring -->
+          <circle cx="100" cy="100" r="72" stroke="rgba(240,192,64,0.25)" stroke-width="1.5"/>
+          <!-- Inner ring glow -->
+          <circle cx="100" cy="100" r="54" stroke="rgba(240,192,64,0.4)" stroke-width="1"/>
+          <!-- EU Stars (12 stars) -->
+          <g fill="#f0c040">
+            <text x="100" y="18" text-anchor="middle" font-size="9">★</text>
+            <text x="145" y="33" text-anchor="middle" font-size="9">★</text>
+            <text x="178" y="68" text-anchor="middle" font-size="9">★</text>
+            <text x="183" y="107" text-anchor="middle" font-size="9">★</text>
+            <text x="165" y="150" text-anchor="middle" font-size="9">★</text>
+            <text x="130" y="182" text-anchor="middle" font-size="9">★</text>
+            <text x="89" y="190" text-anchor="middle" font-size="9">★</text>
+            <text x="48" y="179" text-anchor="middle" font-size="9">★</text>
+            <text x="18" y="150" text-anchor="middle" font-size="9">★</text>
+            <text x="5" y="110" text-anchor="middle" font-size="9">★</text>
+            <text x="15" y="68" text-anchor="middle" font-size="9">★</text>
+            <text x="50" y="33" text-anchor="middle" font-size="9">★</text>
+          </g>
+          <!-- Center fill -->
+          <circle cx="100" cy="100" r="50" fill="rgba(17,34,68,0.8)"/>
+        </svg>
+        <div class="eu-center">
+          <div class="eu-flag-text">🇪🇺</div>
+          <p>Made in EU</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST STRIP ── -->
+<div class="trust-strip">
+  <div class="trust-item"><span class="icon">🔒</span> AVG/GDPR-conform</div>
+  <div class="trust-item"><span class="icon">🌍</span> Europese dataopslag</div>
+  <div class="trust-item"><span class="icon">🛡️</span> Geen Big Tech</div>
+  <div class="trust-item"><span class="icon">💬</span> Nederlandstalig advies</div>
+  <div class="trust-item"><span class="icon">⚡</span> Persoonlijke begeleiding</div>
+</div>
+
+<!-- ── DIENSTEN ── -->
+<section id="diensten">
+  <div class="section-header">
+    <p class="section-label reveal">Onze diensten</p>
+    <h2 class="section-title reveal d1">Van American Big Tech<br/>naar Europese vrijheid</h2>
+    <p class="section-sub reveal d2">Wij begeleiden u stap voor stap bij elke overstap — van e-mail tot cloudopslag, van browser tot kantoorapplicaties.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-icon">📧</span>
+      <h3>E-mail &amp; Communicatie</h3>
+      <p>Overstappen van Gmail of Outlook naar veilige, Europese e-maildiensten. Wij regelen de migratie van uw berichten en adresboek en begeleiden u in het gebruik.</p>
+      <div class="service-examples">
+        <span class="tag">ProtonMail</span>
+        <span class="tag">Tutanota</span>
+        <span class="tag">Infomaniak</span>
+        <span class="tag">Posteo</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal d1">
+      <span class="service-icon">☁️</span>
+      <h3>Cloudopslag &amp; Bestanden</h3>
+      <p>Weg van Google Drive of Dropbox. Wij helpen u over te stappen naar Europese alternatieven waarbij uw bestanden veilig in Europa worden bewaard.</p>
+      <div class="service-examples">
+        <span class="tag">Nextcloud</span>
+        <span class="tag">Tresorit</span>
+        <span class="tag">Internxt</span>
+        <span class="tag">pCloud EU</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal d2">
+      <span class="service-icon">📄</span>
+      <h3>Kantoorapplicaties</h3>
+      <p>Microsoft 365 of Google Workspace vervangen door open-source of Europese kantoorsuites. Documenten, spreadsheets en presentaties — alles blijft werken.</p>
+      <div class="service-examples">
+        <span class="tag">LibreOffice</span>
+        <span class="tag">OnlyOffice</span>
+        <span class="tag">Collabora</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-icon">🌐</span>
+      <h3>Browser &amp; Zoekmachine</h3>
+      <p>Weg van Chrome en Google. Wij adviseren en installeren privacyvriendelijke browsers en zoekmachines die uw surfgedrag niet registreren.</p>
+      <div class="service-examples">
+        <span class="tag">Firefox</span>
+        <span class="tag">Brave</span>
+        <span class="tag">Startpage</span>
+        <span class="tag">Ecosia</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal d1">
+      <span class="service-icon">📱</span>
+      <h3>Smartphone &amp; Apps</h3>
+      <p>Advies over het terugdringen van Google- en Apple-afhankelijkheid op uw telefoon. Van alternatieve app-stores tot privacyvriendelijke apps voor elke behoefte.</p>
+      <div class="service-examples">
+        <span class="tag">F-Droid</span>
+        <span class="tag">Signal</span>
+        <span class="tag">Wire</span>
+        <span class="tag">Fairphone</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal d2">
+      <span class="service-icon">🔐</span>
+      <h3>Privacy Scan &amp; Advies</h3>
+      <p>Een persoonlijk gesprek over uw huidige digitale situatie. Wij brengen in kaart welke Amerikaanse diensten u gebruikt en maken een persoonlijk migratieplan op maat.</p>
+      <div class="service-examples">
+        <span class="tag">Gratis kennismaking</span>
+        <span class="tag">Op maat</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OVER ── -->
+<section id="over">
+  <div class="about-inner">
+    <div class="about-visual">
+      <div class="stat-card reveal">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Europese alternatieven<br/>aanbevolen</div>
+      </div>
+      <div class="stat-card reveal d1">
+        <div class="stat-number">AVG</div>
+        <div class="stat-label">Alle aanbevelingen zijn<br/>volledig privacywetgeving-conform</div>
+      </div>
+      <div class="stat-card reveal d2">
+        <div class="stat-number">1-op-1</div>
+        <div class="stat-label">Persoonlijke begeleiding<br/>voor elke klant</div>
+      </div>
+    </div>
+
+    <div class="about-content">
+      <div class="section-header">
+        <p class="section-label reveal">Over RoJaTech</p>
+        <h2 class="section-title reveal d1">Digitale onafhankelijkheid voor iedereen</h2>
+      </div>
+      <p class="about-text reveal d2">
+        RoJa.tech is opgericht met één missie: consumenten helpen hun digitale leven terug in eigen handen te nemen. In een wereld waarin grote Amerikaanse techbedrijven steeds meer data verzamelen, bieden wij een eerlijk alternatief.
+      </p>
+      <p class="about-text reveal d2">
+        Wij geloven dat privacy een grondrecht is, geen luxe. Daarom begeleiden wij gewone mensen — zonder technische achtergrond — bij de overstap naar Europese software en cloudoplossingen. Persoonlijk, geduldig en zonder jargon.
+      </p>
+      <ul class="value-list reveal d3">
+        <li>Privacy-first benadering: uw data blijft van u</li>
+        <li>Europese servers en Europese wetgeving (AVG/GDPR)</li>
+        <li>Onafhankelijk advies — geen commissies van aanbieders</li>
+        <li>Begrijpelijke begeleiding zonder technisch jargon</li>
+        <li>Ondersteuning na de overstap, ook op de lange termijn</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="section-header">
+    <p class="section-label reveal">Contact</p>
+    <h2 class="section-title reveal d1">Klaar voor de overstap?</h2>
+    <p class="section-sub reveal d2">Plan een gratis kennismakingsgesprek in. Wij bespreken uw situatie en maken samen een plan dat bij u past.</p>
+  </div>
+
+  <div class="contact-inner">
+    <div class="contact-info">
+      <div class="contact-item reveal">
+        <div class="contact-item-icon">📧</div>
+        <div>
+          <h4>E-mail</h4>
+          <p><a href="mailto:info@rojatech.nl">info@rojatech.nl</a></p>
+        </div>
+      </div>
+      <div class="contact-item reveal d1">
+        <div class="contact-item-icon">🌐</div>
+        <div>
+          <h4>Website</h4>
+          <p><a href="https://rojatech.nl">rojatech.nl</a></p>
+        </div>
+      </div>
+      <div class="contact-item reveal d2">
+        <div class="contact-item-icon">📍</div>
+        <div>
+          <h4>Locatie</h4>
+          <p>Nederland — dienstverlening door heel Europa</p>
+        </div>
+      </div>
+      <div class="contact-item reveal d3">
+        <div class="contact-item-icon">🕐</div>
+        <div>
+          <h4>Reactietijd</h4>
+          <p>Wij reageren binnen 1 werkdag</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal d1">
+      <h3>Stuur een bericht</h3>
+      <div class="form-group">
+        <label>Uw naam</label>
+        <input type="text" placeholder="Jan de Vries" />
+      </div>
+      <div class="form-group">
+        <label>E-mailadres</label>
+        <input type="email" placeholder="jan@voorbeeld.nl" />
+      </div>
+      <div class="form-group">
+        <label>Ik wil overstappen van…</label>
+        <select>
+          <option value="">Selecteer een dienst</option>
+          <option>Google (Gmail, Drive, Chrome…)</option>
+          <option>Microsoft (365, OneDrive, Teams…)</option>
+          <option>Amazon / AWS</option>
+          <option>Apple-diensten</option>
+          <option>Meerdere / Weet ik nog niet</option>
+          <option>Anders</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Uw vraag of situatie</label>
+        <textarea placeholder="Vertel kort over uw huidige situatie en wat u wilt bereiken…"></textarea>
+      </div>
+      <button class="form-submit">Verstuur bericht ✉️</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">RoJa<span>.tech</span></div>
+  <p class="footer-copy">© 2025 RoJa.tech — Digitale vrijheid voor iedereen</p>
+  <ul class="footer-links">
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Algemene voorwaarden</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--white)' : '';
+    });
+  });
+</script>
+</body>
+</html>
