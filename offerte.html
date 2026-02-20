@@ -131,6 +131,9 @@
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus { border-color: var(--eu-gold); box-shadow: 0 0 0 3px rgba(240,192,64,0.1); }
+    .form-group input.invalid { border-color: #f87171; box-shadow: 0 0 0 3px rgba(248,113,113,0.1); }
+    .field-error { font-size: 0.76rem; color: #f87171; margin-top: 0.35rem; display: none; }
+    .field-error.show { display: block; }
     .form-group textarea { resize: vertical; min-height: 140px; }
     .form-group input::placeholder,
     .form-group textarea::placeholder { color: rgba(136,153,187,0.5); }
@@ -162,17 +165,32 @@
     .form-submit:hover:not(:disabled) { background: var(--eu-gold-dim); transform: translateY(-1px); }
     .form-submit:disabled { opacity: 0.65; cursor: not-allowed; }
 
+    .form-error-banner {
+      display: none; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 1rem;
+      font-size: 0.88rem; color: #fca5a5; line-height: 1.6;
+    }
+    .form-error-banner.show { display: block; }
+
     .success-message {
       display: none;
       background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.35);
-      border-radius: 8px; padding: 1.5rem; text-align: center;
+      border-radius: 8px; padding: 2rem; text-align: center;
     }
     .success-message.show { display: block; }
-    .success-message h3 {
-      font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700;
-      color: #4ade80; margin-bottom: 0.5rem;
+    .success-icon {
+      width: 72px; height: 72px; margin: 0 auto 1.5rem auto;
+      background: rgba(34,197,94,0.12); border: 2px solid rgba(34,197,94,0.35);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; animation: popIn 0.45s cubic-bezier(0.175,0.885,0.32,1.275) both;
     }
-    .success-message p { color: var(--muted); font-size: 0.95rem; }
+    @keyframes popIn { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .success-message h3 {
+      font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700;
+      color: #4ade80; margin-bottom: 0.8rem;
+    }
+    .success-message p { color: var(--white); font-size: 1rem; line-height: 1.7; }
+    .success-divider { width: 40px; height: 2px; background: var(--eu-gold); border-radius: 2px; opacity: 0.5; margin: 1rem auto; }
 
     footer {
       border-top: 1px solid var(--border); padding: 2.2rem clamp(1.2rem, 5vw, 4rem);
@@ -210,7 +228,17 @@
   </div>
 
   <div class="form-container">
-    <form id="offerteForm" novalidate>
+
+    <!-- Foutmelding (als Formspree mislukt) -->
+    <div class="form-error-banner" id="formErrorBanner">
+      ❌ Er is iets misgegaan. Probeer het opnieuw of mail ons direct: <a href="mailto:info@rojatech.nl" style="color: #fca5a5; font-weight: 600;">info@rojatech.nl</a>
+    </div>
+
+    <!-- Het formulier -->
+    <form id="offerteForm" action="https://formspree.io/f/mykddnov" method="POST" novalidate>
+      
+      <!-- Hidden field voor onderwerp -->
+      <input type="hidden" name="_subject" value="Nieuwe Offerte Aanvraag via Website">
       
       <div class="form-group">
         <label for="naam">
@@ -218,6 +246,7 @@
           <span class="required-badge">verplicht</span>
         </label>
         <input type="text" id="naam" name="naam" placeholder="Jan de Vries" required />
+        <div class="field-error" id="naamError">Vul uw naam in.</div>
       </div>
 
       <div class="form-group">
@@ -226,6 +255,7 @@
           <span class="required-badge">verplicht</span>
         </label>
         <input type="email" id="email" name="email" placeholder="jan@voorbeeld.nl" required />
+        <div class="field-error" id="emailError">Vul een geldig e-mailadres in.</div>
       </div>
 
       <div class="form-group">
@@ -241,31 +271,31 @@
         </label>
         <div class="checkbox-group">
           <div class="checkbox-item">
-            <input type="checkbox" id="service-email" name="diensten" value="E-mail migratie (ProtonMail)">
+            <input type="checkbox" id="service-email" name="diensten[]" value="E-mail migratie (ProtonMail)">
             <label for="service-email">E-mail migratie (ProtonMail)</label>
           </div>
           <div class="checkbox-item">
-            <input type="checkbox" id="service-cloud" name="diensten" value="Cloudopslag (Proton Drive / Tresorit)">
+            <input type="checkbox" id="service-cloud" name="diensten[]" value="Cloudopslag (Proton Drive / Tresorit)">
             <label for="service-cloud">Cloudopslag (Proton Drive / Tresorit)</label>
           </div>
           <div class="checkbox-item">
-            <input type="checkbox" id="service-browser" name="diensten" value="Browser en zoekmachine setup">
+            <input type="checkbox" id="service-browser" name="diensten[]" value="Browser en zoekmachine setup">
             <label for="service-browser">Browser en zoekmachine setup</label>
           </div>
           <div class="checkbox-item">
-            <input type="checkbox" id="service-smartphone" name="diensten" value="Smartphone apps en privacy">
+            <input type="checkbox" id="service-smartphone" name="diensten[]" value="Smartphone apps en privacy">
             <label for="service-smartphone">Smartphone apps en privacy</label>
           </div>
           <div class="checkbox-item">
-            <input type="checkbox" id="service-lineageos" name="diensten" value="LineageOS installatie">
+            <input type="checkbox" id="service-lineageos" name="diensten[]" value="LineageOS installatie">
             <label for="service-lineageos">LineageOS installatie (Google-vrij Android)</label>
           </div>
           <div class="checkbox-item">
-            <input type="checkbox" id="service-kantoor" name="diensten" value="Kantoorapplicaties">
+            <input type="checkbox" id="service-kantoor" name="diensten[]" value="Kantoorapplicaties">
             <label for="service-kantoor">Kantoorapplicaties (LibreOffice / OnlyOffice)</label>
           </div>
           <div class="checkbox-item">
-            <input type="checkbox" id="service-volledig" name="diensten" value="Compleet begeleidingspakket">
+            <input type="checkbox" id="service-volledig" name="diensten[]" value="Compleet begeleidingspakket">
             <label for="service-volledig"><strong>Compleet begeleidingspakket</strong> (alles uit handen)</label>
           </div>
         </div>
@@ -297,9 +327,17 @@
 
     </form>
 
+    <!-- Succesmelding (na versturen) -->
     <div class="success-message" id="successMessage">
-      <h3>✅ Aanvraag Ontvangen!</h3>
-      <p>Bedankt! We nemen binnen 1 werkdag contact met u op met een offerte op maat.</p>
+      <div class="success-icon">✅</div>
+      <h3>Aanvraag Ontvangen!</h3>
+      <div class="success-divider"></div>
+      <p>
+        Hartelijk dank voor uw aanvraag.<br/><br/>
+        Wij nemen <strong>binnen 1 werkdag</strong> contact met u op met een offerte op maat.<br/><br/>
+        Met vriendelijke groet,<br/>
+        <strong>Team RoJa.tech</strong>
+      </p>
     </div>
   </div>
 
@@ -311,64 +349,80 @@
 </footer>
 
 <script>
-  // E-mail adres opbouwen om spam te voorkomen
-  (function() {
-    var u = 'info';
-    var d = 'rojatech.nl';
-    window.contactEmail = u + '@' + d;
-  })();
-
   const form = document.getElementById('offerteForm');
   const submitBtn = document.getElementById('submitBtn');
   const successMsg = document.getElementById('successMessage');
+  const errorBanner = document.getElementById('formErrorBanner');
+  const naamEl = document.getElementById('naam');
+  const emailEl = document.getElementById('email');
+  const naamErrorEl = document.getElementById('naamError');
+  const emailErrorEl = document.getElementById('emailError');
 
+  // Validatie functies
+  function isValidEmail(v) {
+    return v.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+  }
+
+  function checkNaam() {
+    const ok = naamEl.value.trim() !== '';
+    naamEl.classList.toggle('invalid', !ok);
+    naamErrorEl.classList.toggle('show', !ok);
+    return ok;
+  }
+
+  function checkEmail() {
+    const ok = isValidEmail(emailEl.value);
+    emailEl.classList.toggle('invalid', !ok);
+    emailErrorEl.classList.toggle('show', !ok);
+    return ok;
+  }
+
+  // Live validatie
+  naamEl.addEventListener('blur', checkNaam);
+  naamEl.addEventListener('input', () => { if (naamEl.classList.contains('invalid')) checkNaam(); });
+  emailEl.addEventListener('blur', checkEmail);
+  emailEl.addEventListener('input', () => { if (emailEl.classList.contains('invalid')) checkEmail(); });
+
+  // Form submission
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    // Validatie
-    const naam = document.getElementById('naam').value.trim();
-    const email = document.getElementById('email').value.trim();
-    
-    if (!naam || !email) {
-      alert('Vul uw naam en e-mailadres in');
+    // Valideer eerst
+    const naamOk = checkNaam();
+    const emailOk = checkEmail();
+
+    if (!naamOk || !emailOk) {
+      if (!naamOk) naamEl.focus();
+      else if (!emailOk) emailEl.focus();
       return;
     }
 
-    // Verzamel alle geselecteerde diensten
-    const checkboxes = document.querySelectorAll('input[name="diensten"]:checked');
-    const diensten = Array.from(checkboxes).map(cb => cb.value).join(', ');
+    // Knop: bezig
+    submitBtn.textContent = 'Bezig met versturen…';
+    submitBtn.disabled = true;
+    errorBanner.classList.remove('show');
 
-    // Bouw email body
-    const situatie = document.getElementById('situatie').value;
-    const tijdlijn = document.getElementById('tijdlijn').value;
-    const telefoon = document.getElementById('telefoon').value;
+    try {
+      // Verstuur naar Formspree
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
 
-    const body = `
-NIEUWE OFFERTE AANVRAAG
-
-Naam: ${naam}
-E-mail: ${email}
-Telefoon: ${telefoon || 'Niet opgegeven'}
-
-Diensten:
-${diensten || 'Geen specifieke diensten geselecteerd'}
-
-Situatie:
-${situatie || 'Niet ingevuld'}
-
-Tijdlijn: ${tijdlijn || 'Niet opgegeven'}
-    `.trim();
-
-    // Verstuur via mailto (simpelste oplossing zonder backend)
-    // Of gebruik Formspree als je dat al hebt ingesteld
-    const mailtoLink = `mailto:${window.contactEmail}?subject=Offerte Aanvraag - ${naam}&body=${encodeURIComponent(body)}`;
-    
-    // Toon success message
-    form.style.display = 'none';
-    successMsg.classList.add('show');
-
-    // Open email client
-    window.location.href = mailtoLink;
+      if (res.ok) {
+        // Success: verberg formulier, toon succes
+        form.style.display = 'none';
+        successMsg.classList.add('show');
+      } else {
+        throw new Error(res.status);
+      }
+    } catch(err) {
+      // Error: toon foutmelding, heractiveer knop
+      errorBanner.classList.add('show');
+      submitBtn.textContent = 'Verstuur Aanvraag ✉️';
+      submitBtn.disabled = false;
+    }
   });
 </script>
 
