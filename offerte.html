@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offerte Aanvragen – RoJa.tech</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-deep:   #0a1628;
+      --blue-mid:    #112244;
+      --eu-gold:     #f0c040;
+      --eu-gold-dim: #c8a030;
+      --white:       #f5f7fa;
+      --muted:       #8899bb;
+      --card:        #0e1e38;
+      --border:      rgba(240,192,64,0.18);
+      --radius:      12px;
+      --ease:        0.3s cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--blue-deep);
+      color: var(--white);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse 80% 55% at 50% 0%,  rgba(30,79,163,.35) 0%, transparent 70%);
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.2rem,5vw,4rem); height: 68px;
+      background: rgba(10,22,40,.93);
+      backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem;
+      letter-spacing:-.02em; color:var(--white); text-decoration:none;
+    }
+    .nav-logo span { color: var(--eu-gold); }
+    .nav-back {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.85rem; font-weight: 500; color: var(--muted);
+      text-decoration: none; transition: color var(--ease);
+    }
+    .nav-back:hover { color: var(--white); }
+    .nav-back::before { content: '←'; font-size: 1rem; }
+
+    main {
+      position: relative; z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 8rem clamp(1.2rem, 5vw, 2.5rem) 6rem;
+    }
+
+    .page-header {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .page-badge {
+      display: inline-block;
+      background: rgba(240,192,64,0.12); border: 1px solid rgba(240,192,64,0.3);
+      border-radius: 100px; padding: 0.35rem 1rem;
+      font-size: 0.78rem; font-weight: 500; color: var(--eu-gold);
+      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    .page-badge::before { content: '★ '; }
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.025em;
+      margin-bottom: 1rem;
+    }
+    .page-subtitle {
+      font-size: 1.05rem; color: var(--muted); font-weight: 300; line-height: 1.7;
+    }
+
+    .form-container {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 2.5rem; margin-bottom: 2rem;
+    }
+
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem;
+    }
+    .required-badge {
+      font-size: 0.68rem; font-weight: 700;
+      background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.35);
+      color: #f87171; border-radius: 4px; padding: 0.1rem 0.4rem;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      outline: none;
+      transition: border-color var(--ease), box-shadow var(--ease);
+    }
+    .form-group select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238899bb' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    .form-group select option { background: var(--blue-mid); color: var(--white); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--eu-gold); box-shadow: 0 0 0 3px rgba(240,192,64,0.1); }
+    .form-group textarea { resize: vertical; min-height: 140px; }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(136,153,187,0.5); }
+
+    .checkbox-group {
+      display: flex; flex-direction: column; gap: 0.8rem;
+      padding: 1rem;
+      background: rgba(255,255,255,0.02);
+      border-radius: 8px;
+    }
+    .checkbox-item {
+      display: flex; align-items: center; gap: 0.7rem;
+    }
+    .checkbox-item input[type="checkbox"] {
+      width: 20px; height: 20px; cursor: pointer;
+    }
+    .checkbox-item label {
+      margin: 0; font-size: 0.95rem; font-weight: 400; text-transform: none;
+      letter-spacing: 0; color: var(--white); cursor: pointer;
+    }
+
+    .form-submit {
+      width: 100%; background: var(--eu-gold); color: var(--blue-deep);
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem;
+      padding: 1.1rem; border-radius: 8px; border: none; cursor: pointer;
+      transition: background var(--ease), transform var(--ease), opacity var(--ease);
+      margin-top: 1rem;
+    }
+    .form-submit:hover:not(:disabled) { background: var(--eu-gold-dim); transform: translateY(-1px); }
+    .form-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    .success-message {
+      display: none;
+      background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.35);
+      border-radius: 8px; padding: 1.5rem; text-align: center;
+    }
+    .success-message.show { display: block; }
+    .success-message h3 {
+      font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700;
+      color: #4ade80; margin-bottom: 0.5rem;
+    }
+    .success-message p { color: var(--muted); font-size: 0.95rem; }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem clamp(1.2rem, 5vw, 4rem);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem; position: relative; z-index: 1;
+    }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; }
+    .footer-logo span { color: var(--eu-gold); }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+
+    @media (max-width: 768px) {
+      .page-title { font-size: 1.8rem; }
+      .form-container { padding: 1.8rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">RoJa<span>.tech</span></a>
+  <a href="index.html" class="nav-back">Terug naar website</a>
+</nav>
+
+<main>
+
+  <div class="page-header">
+    <div class="page-badge">Laagdrempelig en duidelijk</div>
+    <h1 class="page-title">Offerte Aanvragen</h1>
+    <p class="page-subtitle">
+      Vul onderstaand formulier in en we nemen binnen 1 werkdag contact met u op met een offerte op maat.
+    </p>
+  </div>
+
+  <div class="form-container">
+    <form id="offerteForm" novalidate>
+      
+      <div class="form-group">
+        <label for="naam">
+          Uw naam
+          <span class="required-badge">verplicht</span>
+        </label>
+        <input type="text" id="naam" name="naam" placeholder="Jan de Vries" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">
+          E-mailadres
+          <span class="required-badge">verplicht</span>
+        </label>
+        <input type="email" id="email" name="email" placeholder="jan@voorbeeld.nl" required />
+      </div>
+
+      <div class="form-group">
+        <label for="telefoon">
+          Telefoonnummer (optioneel)
+        </label>
+        <input type="tel" id="telefoon" name="telefoon" placeholder="06 - 12 34 56 78" />
+      </div>
+
+      <div class="form-group">
+        <label>
+          Waar wilt u hulp bij? (meerdere keuzes mogelijk)
+        </label>
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" id="service-email" name="diensten" value="E-mail migratie (ProtonMail)">
+            <label for="service-email">E-mail migratie (ProtonMail)</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="service-cloud" name="diensten" value="Cloudopslag (Proton Drive / Tresorit)">
+            <label for="service-cloud">Cloudopslag (Proton Drive / Tresorit)</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="service-browser" name="diensten" value="Browser en zoekmachine setup">
+            <label for="service-browser">Browser en zoekmachine setup</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="service-smartphone" name="diensten" value="Smartphone apps en privacy">
+            <label for="service-smartphone">Smartphone apps en privacy</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="service-lineageos" name="diensten" value="LineageOS installatie">
+            <label for="service-lineageos">LineageOS installatie (Google-vrij Android)</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="service-kantoor" name="diensten" value="Kantoorapplicaties">
+            <label for="service-kantoor">Kantoorapplicaties (LibreOffice / OnlyOffice)</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="service-volledig" name="diensten" value="Compleet begeleidingspakket">
+            <label for="service-volledig"><strong>Compleet begeleidingspakket</strong> (alles uit handen)</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="situatie">
+          Vertel kort over uw situatie
+        </label>
+        <textarea id="situatie" name="situatie" placeholder="Bijvoorbeeld: Ik gebruik nu Gmail en Google Drive en wil volledig overstappen naar Europese alternatieven. Ik heb een Windows laptop en Android telefoon..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="tijdlijn">
+          Gewenste tijdlijn
+        </label>
+        <select id="tijdlijn" name="tijdlijn">
+          <option value="">Selecteer een tijdlijn</option>
+          <option>Zo snel mogelijk (binnen 1-2 weken)</option>
+          <option>Binnen 1 maand</option>
+          <option>Binnen 3 maanden</option>
+          <option>Geen haast, wil graag advies</option>
+        </select>
+      </div>
+
+      <button type="submit" class="form-submit" id="submitBtn">
+        Verstuur Aanvraag ✉️
+      </button>
+
+    </form>
+
+    <div class="success-message" id="successMessage">
+      <h3>✅ Aanvraag Ontvangen!</h3>
+      <p>Bedankt! We nemen binnen 1 werkdag contact met u op met een offerte op maat.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-logo">RoJa<span>.tech</span></div>
+  <p class="footer-copy">© 2025 RoJa.tech — Digitale vrijheid voor iedereen</p>
+</footer>
+
+<script>
+  // E-mail adres opbouwen om spam te voorkomen
+  (function() {
+    var u = 'info';
+    var d = 'rojatech.nl';
+    window.contactEmail = u + '@' + d;
+  })();
+
+  const form = document.getElementById('offerteForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const successMsg = document.getElementById('successMessage');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Validatie
+    const naam = document.getElementById('naam').value.trim();
+    const email = document.getElementById('email').value.trim();
+    
+    if (!naam || !email) {
+      alert('Vul uw naam en e-mailadres in');
+      return;
+    }
+
+    // Verzamel alle geselecteerde diensten
+    const checkboxes = document.querySelectorAll('input[name="diensten"]:checked');
+    const diensten = Array.from(checkboxes).map(cb => cb.value).join(', ');
+
+    // Bouw email body
+    const situatie = document.getElementById('situatie').value;
+    const tijdlijn = document.getElementById('tijdlijn').value;
+    const telefoon = document.getElementById('telefoon').value;
+
+    const body = `
+NIEUWE OFFERTE AANVRAAG
+
+Naam: ${naam}
+E-mail: ${email}
+Telefoon: ${telefoon || 'Niet opgegeven'}
+
+Diensten:
+${diensten || 'Geen specifieke diensten geselecteerd'}
+
+Situatie:
+${situatie || 'Niet ingevuld'}
+
+Tijdlijn: ${tijdlijn || 'Niet opgegeven'}
+    `.trim();
+
+    // Verstuur via mailto (simpelste oplossing zonder backend)
+    // Of gebruik Formspree als je dat al hebt ingesteld
+    const mailtoLink = `mailto:${window.contactEmail}?subject=Offerte Aanvraag - ${naam}&body=${encodeURIComponent(body)}`;
+    
+    // Toon success message
+    form.style.display = 'none';
+    successMsg.classList.add('show');
+
+    // Open email client
+    window.location.href = mailtoLink;
+  });
+</script>
+
+</body>
+</html>
