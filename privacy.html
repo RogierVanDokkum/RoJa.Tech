@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy – RoJa.tech</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-deep:   #0a1628;
+      --blue-mid:    #112244;
+      --eu-gold:     #f0c040;
+      --eu-gold-dim: #c8a030;
+      --white:       #f5f7fa;
+      --muted:       #8899bb;
+      --card:        #0e1e38;
+      --border:      rgba(240,192,64,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--blue-deep);
+      color: var(--white);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse 80% 55% at 50% 0%, rgba(30,79,163,.35) 0%, transparent 70%);
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.2rem,5vw,4rem); height: 68px;
+      background: rgba(10,22,40,.93);
+      backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem;
+      letter-spacing:-.02em; color:var(--white); text-decoration:none;
+    }
+    .nav-logo span { color: var(--eu-gold); }
+    .nav-back {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.85rem; font-weight: 500; color: var(--muted);
+      text-decoration: none; transition: color 0.3s;
+    }
+    .nav-back:hover { color: var(--white); }
+    .nav-back::before { content: '←'; font-size: 1rem; }
+
+    main {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 8rem clamp(1.2rem, 5vw, 2.5rem) 6rem;
+    }
+
+    .page-header {
+      margin-bottom: 3rem; padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border); text-align: center;
+    }
+    .page-badge {
+      display: inline-block;
+      background: rgba(240,192,64,0.12); border: 1px solid rgba(240,192,64,0.3);
+      border-radius: 100px; padding: 0.35rem 1rem;
+      font-size: 0.78rem; font-weight: 500; color: var(--eu-gold);
+      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    .page-badge::before { content: '★ '; }
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.025em;
+      margin-bottom: 1rem;
+    }
+    .page-subtitle {
+      font-size: 1.05rem; color: var(--muted); font-weight: 300;
+    }
+
+    .content {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2.5rem; margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem; font-weight: 700; color: var(--white);
+      margin: 2rem 0 1rem 0; padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--eu-gold);
+    }
+    h2:first-child { margin-top: 0; }
+
+    h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 600; color: var(--white);
+      margin: 1.5rem 0 0.8rem 0;
+    }
+
+    p {
+      font-size: 0.95rem; color: var(--muted); margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    ul {
+      margin: 1rem 0 1rem 1.5rem;
+      color: var(--muted); font-size: 0.95rem;
+    }
+    li { margin-bottom: 0.5rem; line-height: 1.7; }
+
+    .highlight-box {
+      background: rgba(240,192,64,0.1); border-left: 3px solid var(--eu-gold);
+      padding: 1rem 1.5rem; border-radius: 6px; margin: 1.5rem 0;
+    }
+    .highlight-box p { color: var(--white); margin: 0; }
+    .highlight-box strong { color: var(--eu-gold); }
+
+    .contact-box {
+      background: linear-gradient(135deg, #0e1e38 0%, #1e4fa3 100%);
+      border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2rem;
+    }
+    .contact-box h3 {
+      color: var(--eu-gold); margin: 0 0 0.5rem 0;
+    }
+    .contact-box p { color: rgba(255,255,255,0.9); margin: 0; }
+    .contact-box a {
+      color: var(--eu-gold); text-decoration: none; font-weight: 600;
+    }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 2.2rem clamp(1.2rem, 5vw, 4rem);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 0.5rem; position: relative; z-index: 1;
+    }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; }
+    .footer-logo span { color: var(--eu-gold); }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+
+    @media (max-width: 768px) {
+      .page-title { font-size: 1.8rem; }
+      .content { padding: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">RoJa<span>.tech</span></a>
+  <a href="index.html" class="nav-back">Terug naar website</a>
+</nav>
+
+<main>
+
+  <div class="page-header">
+    <div class="page-badge">Privacy-first</div>
+    <h1 class="page-title">Privacyverklaring</h1>
+    <p class="page-subtitle">
+      Kort en duidelijk: hoe RoJa.tech omgaat met uw gegevens
+    </p>
+  </div>
+
+  <div class="content">
+
+    <div class="highlight-box">
+      <p><strong>Onze belofte:</strong> Wij verzamelen alleen gegevens die nodig zijn voor onze dienstverlening. Uw data wordt niet verkocht, gedeeld of gebruikt voor marketing. Privacy is niet alleen ons advies — het is onze praktijk.</p>
+    </div>
+
+    <h2>1. Wie zijn wij?</h2>
+    <p>
+      RoJa.tech is een adviesbureau gevestigd in Nederland, gespecialiseerd in digitale privacy en de overstap naar Europese software-alternatieven.
+    </p>
+    <ul>
+      <li><strong>Bedrijfsnaam:</strong> RoJa.tech</li>
+      <li><strong>KvK-nummer:</strong> [NOG IN TE VULLEN]</li>
+      <li><strong>E-mail:</strong> info@rojatech.nl</li>
+      <li><strong>Website:</strong> rojatech.nl</li>
+    </ul>
+
+    <h2>2. Welke gegevens verzamelen wij?</h2>
+    <p>Wij verzamelen alleen gegevens die u zelf verstrekt via onze website:</p>
+
+    <h3>📧 Contactformulier</h3>
+    <ul>
+      <li>Uw naam (optioneel)</li>
+      <li>E-mailadres (verplicht)</li>
+      <li>Onderwerp en bericht</li>
+    </ul>
+
+    <h3>📋 Offerte-aanvraagformulier</h3>
+    <ul>
+      <li>Naam (verplicht)</li>
+      <li>E-mailadres (verplicht)</li>
+      <li>Telefoonnummer (optioneel)</li>
+      <li>Diensten waarin u geïnteresseerd bent</li>
+      <li>Omschrijving van uw situatie</li>
+      <li>Gewenste tijdlijn</li>
+    </ul>
+
+    <h3>📰 Nieuwsbrief (indien u zich aanmeldt)</h3>
+    <ul>
+      <li>E-mailadres</li>
+      <li>Datum van aanmelding</li>
+    </ul>
+
+    <h3>🍪 Wat wij NIET verzamelen</h3>
+    <div class="highlight-box">
+      <p><strong>Geen tracking:</strong> Wij gebruiken geen Google Analytics, Facebook Pixel, of andere tracking-technologie. Uw surfgedrag wordt niet gevolgd.</p>
+    </div>
+
+    <h2>3. Waarvoor gebruiken wij uw gegevens?</h2>
+    <ul>
+      <li><strong>Contact opnemen:</strong> Om uw vraag te beantwoorden of een offerte op te stellen</li>
+      <li><strong>Dienstverlening:</strong> Om onze adviesdiensten te kunnen leveren</li>
+      <li><strong>Nieuwsbrief:</strong> Om u tips en updates te sturen (alleen als u zich aanmeldt)</li>
+    </ul>
+    <p>Wij gebruiken uw gegevens <strong>niet</strong> voor:</p>
+    <ul>
+      <li>Verkoop aan derden</li>
+      <li>Marketing door andere bedrijven</li>
+      <li>Profilering of gedragsanalyse</li>
+    </ul>
+
+    <h2>4. Met wie delen wij uw gegevens?</h2>
+    <p>Wij delen uw gegevens alleen met partijen die ons helpen onze diensten te leveren:</p>
+
+    <h3>🔧 Technische dienstverleners (verwerkers):</h3>
+    <ul>
+      <li><strong>GitHub Pages:</strong> Website hosting (Microsoft, VS — maar geen persoonsgegevens opgeslagen op GitHub)</li>
+      <li><strong>Formspree:</strong> Formulierverwerking (VS, GDPR-compliant) — alleen voor het doorsturen van formulieren naar onze inbox</li>
+      <li><strong>Laposta:</strong> Nieuwsbriefverzending (NL) — alleen als u zich aanmeldt voor de nieuwsbrief</li>
+    </ul>
+
+    <p>Al deze partijen hebben een verwerkersovereenkomst met ons en mogen uw gegevens alleen gebruiken voor het doel waarvoor wij ze inzetten.</p>
+
+    <h2>5. Hoe lang bewaren wij uw gegevens?</h2>
+    <ul>
+      <li><strong>Contact- en offerteaanvragen:</strong> 2 jaar na laatste contact (tenzij u klant wordt, dan tijdens de looptijd van de opdracht + 7 jaar fiscaal)</li>
+      <li><strong>Nieuwsbrief:</strong> Tot u zich afmeldt</li>
+      <li><strong>Klantgegevens:</strong> 7 jaar na einde opdracht (fiscale bewaarplicht)</li>
+    </ul>
+
+    <h2>6. Beveiliging</h2>
+    <p>Wij nemen passende maatregelen om uw gegevens te beschermen:</p>
+    <ul>
+      <li>HTTPS-versleuteling op onze gehele website</li>
+      <li>Geen opslag van gegevens op onbeveiligde systemen</li>
+      <li>Toegang tot gegevens alleen voor geautoriseerd personeel</li>
+      <li>Regelmatige back-ups met encryptie</li>
+    </ul>
+
+    <h2>7. Uw rechten (AVG)</h2>
+    <p>U heeft te allen tijde recht op:</p>
+    <ul>
+      <li><strong>Inzage:</strong> Welke gegevens hebben wij van u?</li>
+      <li><strong>Correctie:</strong> Gegevens laten aanpassen als ze onjuist zijn</li>
+      <li><strong>Verwijdering:</strong> Uw gegevens laten verwijderen ("recht op vergetelheid")</li>
+      <li><strong>Beperking:</strong> Verwerking van uw gegevens (tijdelijk) stopzetten</li>
+      <li><strong>Bezwaar:</strong> Bezwaar maken tegen verwerking</li>
+      <li><strong>Dataportabiliteit:</strong> Uw gegevens in een gangbaar formaat ontvangen</li>
+    </ul>
+
+    <h3>Hoe maakt u gebruik van uw rechten?</h3>
+    <p>Stuur een e-mail naar <a href="mailto:info@rojatech.nl" style="color: var(--eu-gold); font-weight: 600;">info@rojatech.nl</a> met uw verzoek. Wij reageren binnen 1 maand.</p>
+
+    <h2>8. Cookies</h2>
+    <p>Onze website gebruikt <strong>geen tracking cookies</strong>. De enige cookies die mogelijk worden geplaatst zijn:</p>
+    <ul>
+      <li><strong>Functionele cookies:</strong> Om de website te laten werken (bijvoorbeeld sessie-cookies)</li>
+      <li><strong>Geen analytics cookies</strong></li>
+      <li><strong>Geen marketing cookies</strong></li>
+    </ul>
+
+    <h2>9. Externe links</h2>
+    <p>Onze website bevat links naar externe partijen zoals ProtonMail, Tresorit, Signal, etc. Wij zijn niet verantwoordelijk voor het privacybeleid van deze partijen. Lees hun privacyverklaringen als u hun diensten gebruikt.</p>
+
+    <h2>10. Wijzigingen</h2>
+    <p>Wij kunnen deze privacyverklaring aanpassen. De meest actuele versie staat altijd op onze website. <strong>Laatste update:</strong> Februari 2025</p>
+
+    <h2>11. Vragen of klachten?</h2>
+    <div class="contact-box">
+      <h3>📧 Neem contact op</h3>
+      <p>
+        Heeft u vragen over uw privacy of deze verklaring?<br/>
+        Mail ons: <a href="mailto:info@rojatech.nl">info@rojatech.nl</a>
+      </p>
+      <p style="margin-top: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.7);">
+        U kunt ook een klacht indienen bij de Autoriteit Persoonsgegevens:<br/>
+        <a href="https://autoriteitpersoonsgegevens.nl" style="color: rgba(240,192,64,0.8);">autoriteitpersoonsgegevens.nl</a>
+      </p>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-logo">RoJa<span>.tech</span></div>
+  <p class="footer-copy">© 2025 RoJa.tech — Digitale vrijheid voor iedereen</p>
+</footer>
+
+</body>
+</html>
